@@ -1,0 +1,224 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "API Documentation",
+        "description": "API documentation using OpenAPi",
+        "contact": {
+            "email": "nmfnavarro@gmail.com"
+        },
+        "version": "1.0.0"
+    },
+    "servers": [
+        {
+            "url": "http://localhost:80/api",
+            "description": "Admin API Server"
+        }
+    ],
+    "paths": {
+        "/books": {
+            "get": {
+                "tags": [
+                    "Books"
+                ],
+                "operationId": "App\\Http\\Controllers\\BookController::index",
+                "parameters": [
+                    {
+                        "name": "page",
+                        "in": "query",
+                        "description": "Pagination page",
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Book Collection"
+                    }
+                }
+            }
+        },
+        "/books/{id}": {
+            "get": {
+                "tags": [
+                    "Books"
+                ],
+                "operationId": "App\\Http\\Controllers\\BookController::show",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Book ID",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Book"
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "Books"
+                ],
+                "operationId": "App\\Http\\Controllers\\BookController::update",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "User ID",
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/BookUpdateRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "202": {
+                        "description": "Book update"
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Books"
+                ],
+                "operationId": "App\\Http\\Controllers\\BookController::destroy",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Book ID",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "Delete book"
+                    }
+                }
+            }
+        },
+        "/books/": {
+            "post": {
+                "tags": [
+                    "Books"
+                ],
+                "operationId": "App\\Http\\Controllers\\BookController::store",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/BookCreateRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Book create"
+                    }
+                }
+            }
+        },
+        "/books/export/{filter}": {
+            "get": {
+                "tags": [
+                    "File Export"
+                ],
+                "operationId": "App\\Http\\Controllers\\BookController::export",
+                "parameters": [
+                    {
+                        "name": "/all || /titles || /authors",
+                        "in": "path",
+                        "description": "To export book details",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Export book data to CSV/XML format."
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "BookCreateRequest": {
+                "title": "Store Book request",
+                "description": "Store book request body data",
+                "properties": {
+                    "title": {
+                        "title": "title",
+                        "type": "string"
+                    },
+                    "author": {
+                        "title": "author",
+                        "type": "string"
+                    },
+                    "description": {
+                        "title": "description",
+                        "type": "string"
+                    },
+                    "publisher": {
+                        "title": "publisher",
+                        "type": "string"
+                    },
+                    "genre": {
+                        "title": "genre",
+                        "type": "string"
+                    }
+                },
+                "type": "object"
+            },
+            "BookUpdateRequest": {
+                "title": "Update Book request",
+                "description": "Update book request body data",
+                "properties": {
+                    "title": {
+                        "title": "title",
+                        "type": "string"
+                    },
+                    "author": {
+                        "title": "author",
+                        "type": "string"
+                    },
+                    "description": {
+                        "title": "description",
+                        "type": "string"
+                    },
+                    "publisher": {
+                        "title": "publisher",
+                        "type": "string"
+                    },
+                    "genre": {
+                        "title": "genre",
+                        "type": "string"
+                    }
+                },
+                "type": "object"
+            }
+        }
+    }
+}
